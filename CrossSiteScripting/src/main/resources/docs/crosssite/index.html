@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/q.js/0.9.2/q.js"></script>
+  <meta charset="UTF-8">
+  <title>gServ Examples - Cross Site Scripting</title>
+</head>
+<body>
+
+<script>
+var internal = 0,public = 1, private=2;
+var paths = ['internal','public','private']
+  function showMessage (selector, which){
+    var promise = callServer(which, selector);
+    promise.then( function( msg ) {
+      $( selector ).val( msg.msg );
+    }).fail(function( err, a, b ) {
+      $( selector ).val( JSON.stringify( err ) );
+    });
+  };
+
+  function showPublic (selector){
+    showMessage(selector, public);
+  };
+
+  function showPrivate (selector){
+    showMessage(selector, private);
+  };
+
+  function showInternal(selector){
+    showMessage(selector, internal);
+  };
+
+  function callServer(which, selector){
+    var host = location.hostname;
+    var url = "http://"+host + ":60000/"+(paths[which] );
+    var p = $.ajax({
+        url: url
+    });
+    return Q(p);
+    };
+
+</script>
+<button id="showPublic">Show Public</button>
+<button id="showPrivate">Show Private</button><br/>
+<button id="showInternal">Show Internal</button><br/>
+<textarea id="message"></textarea>
+
+<script>
+  $(function(){
+    $("#showInternal").click( function(){ showInternal("#message" ); })
+    $("#showPublic").click( function(){ showPublic("#message" ); })
+    $("#showPrivate").click( function(){ showPrivate("#message" ); })
+  })
+</script></body>
+</html>
