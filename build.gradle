@@ -1,12 +1,21 @@
-apply plugin: 'java'
-
-sourceCompatibility = 1.5
-version = '1.0'
-
+allprojects {
+  apply plugin: 'groovy'
+  sourceCompatibility = 1.5
+  version = '1.0'
+  task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+  }
+}
 repositories {
     mavenCentral()
 }
+subprojects {
+  repositories {
+    mavenCentral()
+    mavenLocal()
+  }
+  dependencies {
+    compile('org.codehaus.groovy:groovy-all:2.3.0')
+  }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
 }
