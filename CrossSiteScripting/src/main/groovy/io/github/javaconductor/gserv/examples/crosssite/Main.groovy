@@ -25,24 +25,27 @@ class Main {
     ];
 
     gserv.plugins{
-      plugin ( 'cors', [:] )
+      // declare CORS plugin
+      plugin 'cors', [:] 
     }.http{
-      cors('/public', allowAll(3600))
-      cors('/private', whiteList(3600, hostList))
-      cors('/internal', whiteList(3600, hostListWithLocalhost))
+      
+      // using CORS plugin
+      cors '/public', allowAll(3600)
+      cors '/private', whiteList(3600, hostList)
+      cors '/internal', whiteList(3600, hostListWithLocalhost)
 
       useResourceDocs(true)
 
-      get('/index.html',file("text/html", "crosssite/index.html"))
-      get('/public'){ ->
+      get '/index.html', file("text/html", "crosssite/index.html")
+      get '/public', { ->
         writeJson(msg: "This is the public message.")
       }
 
-      get('/private'){ ->
+      get '/private', { ->
         writeJson(msg: "This is the private message.")
       }
 
-      get('/internal'){ ->
+      get '/internal', {  ->
         writeJson(msg: "This is the internal message.")
       }
 
