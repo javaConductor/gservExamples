@@ -16,6 +16,9 @@ subprojects {
   }
   dependencies {
     compile('org.codehaus.groovy:groovy-all:2.3.0')
+    compile     group: 'io.github.javaconductor', name: 'gserv', version: '0.9.7'
+    testCompile     group: 'io.github.javaconductor', name: 'gserv-test', version: '1.0.0'
+
   }
 
 }

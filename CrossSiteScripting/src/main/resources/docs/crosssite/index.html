@@ -14,7 +14,7 @@ var paths = ['internal','public','private']
   function showMessage (selector, which){
     var promise = callServer(which, selector);
     promise.then( function( msg ) {
-      $( selector ).val( msg.msg );
+      $( selector ).val( msg );
     }).fail(function( err, a, b ) {
       $( selector ).val( JSON.stringify( err ) );
     });
@@ -34,7 +34,7 @@ var paths = ['internal','public','private']
 
   function callServer(which, selector){
     var host = location.hostname;
-    var url = "http://"+host + ":60000/"+(paths[which] );
+    var url = "http://"+host + ":60001/"+(paths[which] );
     var p = $.ajax({
         url: url
     });
