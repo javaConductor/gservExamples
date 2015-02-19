@@ -9,8 +9,8 @@
 <body>
 
 <script>
-var internal = 0,public = 1, private=2;
-var paths = ['internal','public','private']
+var internal = 0,public = 1, private= 2,hidden=3;
+var paths = ['internal','public','private','hidden']
   function showMessage (selector, which){
     var promise = callServer(which, selector);
     promise.then( function( msg ) {
@@ -32,6 +32,10 @@ var paths = ['internal','public','private']
     showMessage(selector, internal);
   };
 
+  function showHidden (selector){
+    showMessage(selector, hidden);
+  };
+
   function callServer(which, selector){
     var host = location.hostname;
     var url = "http://"+host + ":60001/"+(paths[which] );
@@ -45,10 +49,12 @@ var paths = ['internal','public','private']
 <button id="showPublic">Show Public</button>
 <button id="showPrivate">Show Private</button><br/>
 <button id="showInternal">Show Internal</button><br/>
+<button id="showHidden">Show Hidden</button><br/>
 <textarea id="message"></textarea>
 
 <script>
   $(function(){
+    $("#showHidden").click( function(){ showHidden("#message" ); })
     $("#showInternal").click( function(){ showInternal("#message" ); })
     $("#showPublic").click( function(){ showPublic("#message" ); })
     $("#showPrivate").click( function(){ showPrivate("#message" ); })

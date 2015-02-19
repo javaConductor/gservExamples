@@ -37,6 +37,7 @@ class Main {
       cors('/public', allowAll(3600))
       cors('/private/*', whiteList(3600, hostList))
       cors('/internal', whiteList(3600, hostListWithLocalhost))
+        cors('/hidden', blackList(3600, hostListWithLocalhost))
 
       useResourceDocs(true)
 
@@ -50,6 +51,9 @@ class Main {
 
       get('/internal'){ ->
         write( "This is the internal message.")
+      }
+      get('/hidden'){ ->
+        write( "This is the hidden message.")
       }
 
     }.start(60001);
